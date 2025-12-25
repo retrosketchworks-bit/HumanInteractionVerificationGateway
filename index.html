@@ -1,146 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="referrer" content="no-referrer" />
-<title>Continue</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReviewBoost Pro | Google Reviews & Maps Optimization</title>
+<meta name="description" content="Professional Google Reviews and reputation management services for local businesses. Free audit available.">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Favicon -->
+<link rel="icon" href="https://zupimages.net/up/25/52/5jk6.png" type="image/x-icon">
 
 <style>
-  body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#f5f5f7;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-  }
-  .box{
-    background:white;
-    padding:28px;
-    width:100%;
-    max-width:480px;
-    border-radius:12px;
-    box-shadow:0 8px 35px rgba(0,0,0,0.09);
-  }
-  .spinner{
-    width:48px;
-    height:48px;
-    border:4px solid #ccc;
-    border-top-color:#007bff;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-    margin:20px auto;
-  }
-  @keyframes spin{ to{transform:rotate(360deg);} }
-  .btn{
-    margin-top:10px;
-    padding:12px 22px;
-    background:#007bff;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:600;
-  }
-  .btn[disabled]{ background:#b8cfff; cursor:not-allowed; }
-  .warning{ margin-top:12px; color:#b33; display:none; }
+/* General */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;}
+body{line-height:1.6;color:#333;display:flex;flex-direction:column;min-height:100vh;background:#f5f6fa;}
+header{height:20px;} /* Removed logo space */
+.container{width:90%;max-width:1200px;margin:auto;padding:60px 0;text-align:center;}
+h1,h2,h3{text-align:center;}
+p{text-align:center;}
+.btn{display:inline-block;padding:16px 40px;margin-top:20px;background:#007BFF;color:#fff;text-decoration:none;border-radius:35px;transition:0.3s;font-weight:bold;box-shadow:0 5px 15px rgba(0,123,255,0.3);}
+.btn:hover{background:#0056b3;transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,86,179,0.4);}
+
+/* Hero */
+.hero{background:url('https://zupimages.net/up/25/52/dqd6.png') no-repeat center center/cover;color:#fff;position:relative;padding:120px 0;display:flex;align-items:center;justify-content:center;flex-direction:column;border-bottom:5px solid #007BFF;}
+.hero .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);}
+.hero-content{position:relative;z-index:2;max-width:900px;opacity:0;transform:translateY(30px);animation:fadeInUp 1s forwards;}
+.hero h1{font-size:3rem;font-weight:900;margin-bottom:20px;text-shadow:0 3px 10px rgba(0,0,0,0.5);}
+.hero p{font-size:1.4rem;margin-bottom:20px;}
+
+/* About */
+.about{background:#fff;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:80px 20px;border-radius:25px;margin:40px auto;box-shadow:0 10px 30px rgba(0,0,0,0.05);}
+.about h2{font-size:2.7rem;margin-bottom:25px;color:#007BFF;}
+.about p{font-size:1.2rem;max-width:850px;line-height:1.8;}
+
+/* Services */
+.services{background:#f7f9fc;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:80px 20px;}
+.services h2{font-size:2.7rem;margin-bottom:60px;color:#007BFF;}
+.service-cards{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:35px;}
+.card{display:flex;flex-direction:column;justify-content:center;align-items:center;background:#fff;padding:50px 25px;border-radius:20px;width:320px;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,0.08);transition:transform 0.4s, box-shadow 0.4s;opacity:0;transform:translateY(30px);}
+.card:hover{transform:translateY(-8px);box-shadow:0 20px 45px rgba(0,0,0,0.12);}
+.card i{font-size:3rem;margin-bottom:20px;color:#007BFF;transition:transform 0.4s;}
+.card:hover i{transform:rotate(20deg);}
+.card h3{margin-bottom:15px;font-size:1.5rem;}
+
+/* Why Choose Us */
+.why{background:#fff;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:80px 20px;border-radius:25px;margin:40px auto;box-shadow:0 10px 30px rgba(0,0,0,0.05);}
+.why h2{font-size:2.7rem;margin-bottom:40px;color:#007BFF;}
+.why ul{list-style:none;font-size:1.15rem;max-width:650px;margin:auto;padding-left:0;}
+.why ul li{margin-bottom:20px;position:relative;padding-left:40px;text-align:left;opacity:0;transform:translateY(30px);}
+.why ul li::before{content:"\f00c";font-family:FontAwesome;position:absolute;left:0;color:#007BFF;font-weight:bold;}
+
+/* CTA – now full background image */
+.cta{background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;color:#fff;padding:120px 20px;display:flex;justify-content:center;align-items:center;flex-direction:column;position:relative;overflow:hidden;border-radius:25px;margin:60px auto;}
+.cta::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1;}
+.cta .container{position:relative;z-index:2;opacity:0;transform:translateY(30px);animation:fadeInUp 1s forwards;}
+.cta h2{font-size:2.8rem;margin-bottom:25px;line-height:1.2;}
+
+/* Contact */
+.contact{background:#f7f9fc;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:80px 20px;opacity:0;transform:translateY(30px);}
+.contact h2{margin-bottom:40px;color:#007BFF;}
+.contact p{margin-bottom:15px;font-size:1.15rem;}
+.contact i{color:#007BFF;margin-right:10px;}
+
+/* Footer */
+footer{background:#333;color:#fff;padding:25px 0;font-size:0.95rem;display:flex;justify-content:center;align-items:center;border-top:5px solid #007BFF;}
+
+/* Animations */
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+
+/* Responsive */
+@media (max-width:768px){
+  .service-cards{flex-direction:column;gap:25px;}
+  .hero h1{font-size:2.4rem;}
+  .hero p{font-size:1.1rem;}
+  .about h2,.services h2,.why h2{font-size:2.3rem;}
+  .cta h2{font-size:2.5rem;}
+  .why ul li{text-align:center;padding-left:25px;}
+}
 </style>
 </head>
-
 <body>
-<div class="box">
-    <div class="spinner"></div>
-    <button class="btn" disabled id="goBtn">Continue</button>
-    <div class="warning" id="warn"></div>
-</div>
+
+<!-- Header (Logo removed) -->
+<header></header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="overlay"></div>
+  <div class="container hero-content">
+    <h1>Turn Google Reviews Into More Customers</h1>
+    <p>We help local businesses improve their reputation, visibility, and rankings on Google Maps.</p>
+    <a href="https://wa.me/212708180094?text=Hello!%20I%20want%20a%20free%20audit%20for%20my%20business." target="_blank" class="btn"><i class="fab fa-whatsapp"></i> Get Free Audit</a>
+  </div>
+</section>
+
+<!-- About Us -->
+<section class="about">
+  <div class="container">
+    <h2>About ReviewBoost Pro</h2>
+    <p>ReviewBoost Pro helps local businesses improve their online visibility and credibility on Google. We specialize in Google Reviews management, professional customer responses, and Google Maps optimization for better local rankings.</p>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="service-cards">
+      <div class="card">
+        <i class="fas fa-star"></i>
+        <h3>Google Reviews Management</h3>
+        <p>Build trust with more positive and authentic reviews.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-map-marked-alt"></i>
+        <h3>Google Maps Optimization</h3>
+        <p>Improve your local ranking and visibility.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-user-check"></i>
+        <h3>Reputation Management</h3>
+        <p>Professional responses to customer feedback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why">
+  <div class="container">
+    <h2>Why Choose ReviewBoost Pro</h2>
+    <ul>
+      <li><i class="fas fa-globe"></i> Online service – no office visit required</li>
+      <li><i class="fas fa-hand-holding-usd"></i> Transparent & affordable solutions</li>
+      <li><i class="fas fa-chart-line"></i> Proven local strategies</li>
+      <li><i class="fas fa-check-circle"></i> Free audit available</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA (Full image background, no blue overlay) -->
+<section class="cta">
+  <div class="container">
+    <h2>Get Your Free Google Audit Today</h2>
+    <a href="https://wa.me/212708180094?text=Hello!%20I%20want%20a%20free%20audit%20for%20my%20business." target="_blank" class="btn"><i class="fab fa-whatsapp"></i> Contact Us on WhatsApp</a>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact">
+  <div class="container">
+    <h2>Contact Information</h2>
+    <p><i class="fas fa-phone"></i> 0708-180094</p>
+    <p><i class="fas fa-globe"></i> Serving businesses across Morocco & France</p>
+    <p><i class="fas fa-map-marker-alt"></i> Based in Meknès, Morocco</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2026 ReviewBoost Pro. All rights reserved.</p>
+  </div>
+</footer>
 
 <script>
-(function(){
+  // Language auto-detection
+  document.documentElement.lang = navigator.language || navigator.userLanguage || 'en';
 
-  const TARGET = "https://www.therebths.com/9HF976T/2RGFCRCZ/";
-  const goBtn = document.getElementById("goBtn");
-  const warn  = document.getElementById("warn");
-
-  let interacted = false;
-  let movementScore = 0;
-  let chaosScore = 0;
-  let interactionTime = null;
-
-  // ❌ Block headless / webdriver
-  function envSuspicious(){
-    const ua = navigator.userAgent;
-    if (navigator.webdriver) return true;
-    if (/HeadlessChrome|PhantomJS|puppeteer/i.test(ua)) return true;
-    return false;
-  }
-
-  // 🧠 Complex human score evaluation
-  function evaluateHumanity(){
-    const elapsed = Date.now() - interactionTime;
-
-    // must move mouse or touch for at least 500ms
-    if (elapsed < 500) return false;
-
-    // natural human randomness
-    if (movementScore < 12) return false;
-    if (chaosScore < 4) return false;
-
-    return true;
-  }
-
-  function recordMouseMove(e){
-    interacted = true;
-
-    if (!interactionTime) interactionTime = Date.now();
-
-    movementScore++;
-
-    // track chaos
-    const randomness = Math.random() * e.movementX + Math.random() * e.movementY;
-    if (randomness % 3 !== 0) chaosScore++;
-  }
-
-  // touch detection
-  function recordTouch(e){
-    interacted = true;
-
-    if (!interactionTime) interactionTime = Date.now();
-
-    movementScore++;
-
-    if (e.touches && e.touches[0]){
-      const p = e.touches[0].force || 0.2; // many devices return 0 => treat as low
-      if (p > 0.15 && p < 0.9) chaosScore++;
-    }
-  }
-
-  // check every 250ms
-  setInterval(()=>{
-    if (envSuspicious()){
-      warn.style.display = "block";
-      warn.textContent = "Suspicious browser environment detected.";
-      return;
-    }
-
-    if (interacted && evaluateHumanity()){
-      goBtn.disabled = false;
-    }
-  }, 250);
-
-  goBtn.onclick = () => {
-    if (!goBtn.disabled) window.location.href = TARGET;
-  };
-
-  // listeners
-  window.addEventListener("mousemove", recordMouseMove, {passive:true});
-  window.addEventListener("touchstart", recordTouch, {passive:true});
-  window.addEventListener("touchmove", recordTouch, {passive:true});
-
-})();
+  // Scroll animations
+  const sections = document.querySelectorAll('.hero-content, .card, .why ul li, .cta .container, .contact');
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.style.animation="fadeInUp 0.8s forwards";}
+    });
+  }, {threshold:0.3});
+  sections.forEach(sec=>observer.observe(sec));
 </script>
 
 </body>
